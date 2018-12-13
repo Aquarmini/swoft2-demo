@@ -11,6 +11,7 @@
 namespace Swoft\Test;
 
 use PHPUnit\Framework\TestCase;
+use Swoft\Helper\JsonHelper;
 use Swoft\HttpClient\Client;
 
 /**
@@ -30,5 +31,16 @@ class HttpTestCase extends TestCase
             'base_uri' => sprintf('http://127.0.0.1:%s', $port),
             'adapter' => 'curl',
         ]);
+    }
+
+    public function json($uri, $data = [], $headers = [])
+    {
+        $headers['Content-Type'] = 'application/json';
+        $res = $this->client->post($uri, [
+            'json' => JsonHelper::encode($data, JSON_UNESCAPED_UNICODE),
+            'headers' => $headers,
+        ])->getResult();
+
+        return JsonHelper::decode($res, true);
     }
 }

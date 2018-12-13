@@ -11,11 +11,19 @@ namespace Swoft\Test\Cases;
 
 use App\Core\Constants\Swoft;
 use Swoft\Test\AbstractTestCase;
+use Swoft\Test\HttpTestCase;
 
-class ExampleTest extends AbstractTestCase
+class ExampleTest extends HttpTestCase
 {
     public function testExample()
     {
         $this->assertEquals(Swoft::APP_ENV_PROD, \Swoft::environment());
+    }
+
+    public function testHome()
+    {
+        $res = $this->json('/');
+
+        var_dump($res);
     }
 }
